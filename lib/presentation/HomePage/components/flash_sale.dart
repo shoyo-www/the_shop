@@ -69,7 +69,7 @@ class FlashSale extends StatelessWidget {
 class BannerMWithCounter extends StatefulWidget {
   const BannerMWithCounter({
     super.key,
-    this.image = "https://i.imgur.com/pRgcbpS.png",
+    this.image = "https://imgur.com/Oa6Qz5F.png",
     required this.text,
     required this.duration,
     required this.press,

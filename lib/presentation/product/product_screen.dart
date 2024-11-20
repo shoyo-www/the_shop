@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:the_shop/constants/Dimesnions.dart';
@@ -21,7 +22,11 @@ class ProductDetailPage extends StatelessWidget {
             id: ControllerBuilders.productController,
             init: productController,
             builder: (controller) {
-              return Column(
+              return controller.loading ? const Center(
+                child: CupertinoActivityIndicator(
+                  color: primaryColor,
+                ),
+              ) :Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
@@ -31,12 +36,12 @@ class ProductDetailPage extends StatelessWidget {
                         color:  borderGrey,
                         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(Dimensions.h_25),bottomRight: Radius.circular(Dimensions.h_25))
                     ),
-                    child: const NetworkImageWithLoader(
-                      '',
+                    child:  NetworkImageWithLoader(
+                      controller.product?.images?[0] ?? '',
                       fit: BoxFit.cover,
                     ),
                   ),
-
+                 SizedBox(height: Dimensions.h_20),
                   SizedBox(
                     height: Dimensions.h_60,
                     child: ListView.builder(
@@ -45,11 +50,13 @@ class ProductDetailPage extends StatelessWidget {
                       itemCount: controller.product?.images?.length ?? 0,
                       itemBuilder: (c,i) {
                       return Container(
+                        padding: EdgeInsets.all(Dimensions.h_5),
+                        margin: EdgeInsets.only(left: Dimensions.w_8,right: Dimensions.w_8),
                       height: Dimensions.h_50,
-                      width: Dimensions.h_50,
+                      width: Dimensions.h_70,
                       decoration: BoxDecoration(
                           color:  borderGrey,
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(Dimensions.h_25),bottomRight: Radius.circular(Dimensions.h_25))
+                          borderRadius: BorderRadius.circular(Dimensions.h_8)
                       ),
                       child:  NetworkImageWithLoader(
                         controller.product?.images?[i] ?? "",
@@ -64,17 +71,17 @@ class ProductDetailPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Air Jordan 3 Retro',
-                          style: TextStyle(
+                         Text(
+                          controller.product?.productName ?? '',
+                          style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          '\$200',
-                          style: TextStyle(
+                         Text(
+                          '\$${controller.product?.productPrice.toString()}',
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.blue,

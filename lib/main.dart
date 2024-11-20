@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:the_shop/constants/constants.dart';
 import 'package:the_shop/presentation/onboarding/onboarding.dart';
 import 'package:the_shop/routes/app_routes.dart';
 
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
           useInheritedMediaQuery: true,
           builder: (BuildContext context, Widget? child) {
             return GetMaterialApp(
+              theme: ThemeData(
+                scaffoldBackgroundColor: whiteColor
+              ),
               initialBinding: InitialBinding(),
               debugShowCheckedModeBanner: false,
               title: "Shoplon",

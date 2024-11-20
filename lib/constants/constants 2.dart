@@ -24,6 +24,7 @@ class ControllerBuilders {
   static const loginController = 'LoginController';
   static const registerController = 'RegisterController';
   static const homeController = 'HomeController';
+  static const productController = 'ProductController';
 }
 
 class ApiStatus {

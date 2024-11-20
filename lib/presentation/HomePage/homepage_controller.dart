@@ -27,23 +27,19 @@ class HomeController extends GetxController {
     if(await isNetworkAvailable() == false) {
       ToastUtil.showToast('No internet connected');
     } else {
-      loading = true;
       update([ControllerBuilders.homeController]);
       var data = await homeRepositoryImpl.banner();
       data.fold((l) {
         if (l is ServerFailure) {
           ToastUtil.showToast(l.message);
-          loading = false;
           update([ControllerBuilders.homeController]);
         }
       }, (r) {
         if (r.status == true) {
           bannerList.addAll(r.banner ?? []);
-          loading = false;
           update([ControllerBuilders.homeController]);
         }
         else {
-          loading = false;
           update([ControllerBuilders.homeController]);
         }
       }
@@ -57,23 +53,19 @@ class HomeController extends GetxController {
     if(await isNetworkAvailable() == false) {
       ToastUtil.showToast('No internet connected');
     } else {
-      loading = true;
       update([ControllerBuilders.homeController]);
       var data = await homeRepositoryImpl.category();
       data.fold((l) {
         if (l is ServerFailure) {
           ToastUtil.showToast(l.message);
-          loading = false;
           update([ControllerBuilders.homeController]);
         }
       }, (r) {
         if (r.status == true) {
           category.addAll(r.category ?? []);
-          loading = false;
           update([ControllerBuilders.homeController]);
         }
         else {
-          loading = false;
           update([ControllerBuilders.homeController]);
         }
       }

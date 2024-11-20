@@ -3,6 +3,7 @@ import 'package:the_shop/presentation/auth/login/login.dart';
 import 'package:the_shop/presentation/auth/register/register.dart';
 import 'package:the_shop/presentation/entry/entry_point.dart';
 import 'package:the_shop/presentation/onboarding/onboarding.dart';
+import 'package:the_shop/presentation/product/product_screen.dart';
 import 'package:the_shop/presentation/splash_screen.dart';
 import 'package:the_shop/routes/app_routes.dart';
 
@@ -37,6 +38,12 @@ class AppPages {
     GetPage(
         name: AppRoutes.dashBoard,
         page: ()=>const EntryPoint(),
+        transition: transition,
+        transitionDuration: duration
+    ),
+    GetPage(
+        name: AppRoutes.productDetails,
+        page: ()=>const ProductDetailPage(),
         transition: transition,
         transitionDuration: duration
     ),

@@ -22,6 +22,7 @@ class LoginScreen extends StatelessWidget {
       id: ControllerBuilders.loginController,
       builder: ( controller) {
         return Scaffold(
+          backgroundColor: whiteColor,
           body: SingleChildScrollView(
             child: Column(
               children: [

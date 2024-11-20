@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:the_shop/presentation/HomePage/components/best_sellers.dart';
 import 'package:the_shop/presentation/HomePage/components/categories.dart';
 import 'package:the_shop/presentation/HomePage/components/offers_carousel.dart';
 import 'package:the_shop/presentation/HomePage/homepage_controller.dart';
+import 'package:the_shop/routes/app_routes.dart';
 import 'package:the_shop/widgets/network_image.dart';
 import 'components/flash_sale.dart';
 import 'components/most_popular.dart';
@@ -30,7 +32,10 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
-            child: CustomScrollView(
+            child: controller.loading ?  Center(child: CupertinoActivityIndicator(
+              color: primaryColor,
+              radius: Dimensions.h_15,
+            )) :CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
                     child: Column(
@@ -234,52 +239,60 @@ class HomeScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final product = controller.products[index];
 
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: Dimensions.h_150,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFf4f4f5),
-                                  borderRadius: BorderRadius.circular(Dimensions.h_12)
+                        return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            Get.toNamed(AppRoutes.productDetails,arguments: {
+                              'id': controller.products[index].id
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: Dimensions.h_150,
+                                  decoration: BoxDecoration(
+                                    color: borderGrey,
+                                    borderRadius: BorderRadius.circular(Dimensions.h_12)
+                                  ),
+                                  child: NetworkImageWithLoader(
+                                    product.images?[0] ??
+                                        'https://via.placeholder.com/150',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                child: NetworkImageWithLoader(
-                                  product.images?[0] ??
-                                      'https://via.placeholder.com/150',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      product.productName ?? 'Product Name',
-                                      style:  TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: Dimensions.h_12,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        product.productName ?? 'Product Name',
+                                        style:  TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Dimensions.h_12,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4.0),
-                                    Text(
-                                      '\$${product.productPrice?.toString() ?? '0.00'}',
-                                      style:  TextStyle(
-                                        fontSize: Dimensions.h_13,
-                                        fontWeight: FontWeight.bold,
-                                        color: primaryMaterialColor.shade300,
+                                      const SizedBox(height: 4.0),
+                                      Text(
+                                        '\$${product.productPrice?.toString() ?? '0.00'}',
+                                        style:  TextStyle(
+                                          fontSize: Dimensions.h_13,
+                                          fontWeight: FontWeight.bold,
+                                          color: primaryMaterialColor.shade300,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       },

@@ -6,6 +6,7 @@ import 'package:the_shop/core/error/failures.dart';
 import 'package:the_shop/data/datasource/remote/models/response/banner.dart';
 import 'package:the_shop/data/datasource/remote/models/response/category_response.dart';
 import 'package:the_shop/data/datasource/remote/models/response/products_response.dart';
+import 'package:the_shop/data/datasource/remote/models/response/single_product.dart';
 import 'package:the_shop/data/datasource/remote/services/apis.dart';
 import 'package:the_shop/data/datasource/remote/services/dio/rest_client.dart';
 import 'package:the_shop/domain/Repository/home_repository.dart';
@@ -38,6 +39,16 @@ class HomeRepositoryImpl extends HomeRepository {
     try {
       final res = await _restClient.get(url: Apis.products);
       return Right(productsResponseFromJson(res));
+    } on ApiException catch (e) {
+      return Left(ServerFailure(e.message,e.type));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SingleProduct>> getSingleProducts(String id) async{
+    try {
+      final res = await _restClient.get(url: Apis.singleProduct + id);
+      return Right(singleProductFromJson(res));
     } on ApiException catch (e) {
       return Left(ServerFailure(e.message,e.type));
     }

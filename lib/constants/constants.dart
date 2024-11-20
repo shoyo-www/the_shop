@@ -45,6 +45,7 @@ const Color whileColor5 = Color(0xFF0D0D0D);
 const Color greyColor = Color(0xFFB8B5C3);
 const Color lightGreyColor = Color(0xFFF8F8F9);
 const Color darkGreyColor = Color(0xFF1C1C25);
+const Color borderGrey = Color(0xFFf4f4f5);
 
 
 const Color purpleColor = Color(0xFF7B61FF);

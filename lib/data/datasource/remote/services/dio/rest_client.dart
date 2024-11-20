@@ -81,9 +81,7 @@ class RestClient implements BaseService {
           final String message = errorResponse['msg'];
           throw Dio.DioException(message);
         } else if(e.response?.statusCode == 404) {
-          Map<String, dynamic> errorResponse = jsonDecode(e.response?.data);
-          final String message = errorResponse['msg'];
-          throw Dio.DioException(message);
+          throw Dio.DioException(Constants.someThingWentWrong);
         } else if( e.type == DioExceptionType.unknown) {
           throw Dio.DioException(Constants.someThingWentWrong);
         } else if(e.response?.statusCode == 500 || e.response?.statusCode == 502) {
